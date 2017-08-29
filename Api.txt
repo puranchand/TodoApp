@@ -1,5 +1,7 @@
 Post react Api..
  *--------------*
+post APi ////
+
 export function login(user){
 	return dispatch => {
 	apiPost('Login', `userAuthentication.userProfile.email=${user.email}&userAuthentication.password=${user.password}`).then(res => {
@@ -32,4 +34,127 @@ export function Logout() {
             reject(err);
         });
     })
+}
+**************
+
+getApi//////
+
+
+export function getCohortList() {
+    return dispatch => new Promise(function(resolve, reject) {
+
+        apiGet('GetCohortList', {}).then(res => {
+            console.log(res);
+            dispatch({
+                type: actionTypes.GET_COHORT_LIST,
+                payload: res.data.data
+            });
+            resolve(res);
+        })
+        .catch(err => {
+            console.log(err);
+            reject(err);
+        });
+    })
+}
+
+/**************************************** 
+     * Function Name: getCohortPatient
+     * Description: exports an action to get the cohort patients
+     * data from the backend
+     * The data received gets set in the cohorts reducer which can be used
+     * later for manipulation. 
+     * Method has one signature.
+     * @param - cohort_id - used to make the api call based on the cohort ID.
+****************************************/
+
+export function getCohortPatient(cohort_id) {
+    return dispatch => new Promise(function(resolve, reject) {
+
+        apiGet('GetCohortPatient', {
+            'cohortObj.cohort_id' : cohort_id
+        }).then(res => {
+            console.log(res);
+            dispatch({
+                type: actionTypes.GET_COHORT_PATIENT,
+                payload: res.data
+            });
+            resolve(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+            reject(err);
+        });
+    })
+}
+
+/**************************************** 
+     * Function Name: getCohortData
+     * Description: exports an action to get the cohort data from the backend.
+     * The data received is returned via promise which can be used
+     * for manipulation. 
+     * Method has one signature.
+     * @param - cohort_id - used to make the api call based on the cohort ID.
+****************************************/
+
+export function getCohortData(cohort_id) {
+    return dispatch => new Promise(function(resolve, reject) {
+
+        apiGet('GetCohortData', {
+
+            'cohortObj.cohort_id' : cohort_id
+        }).then(res => {
+            console.log(res);
+            resolve(res);
+        })
+        .catch(err => {
+            console.log(err);
+            reject(err);
+        });
+    })
+}
+
+/**************************************** 
+     * Function Name: setCohortDetails
+     * Description: exports an action to set the manipulated Cohort Detail data 
+     * in the cohorts reducer.
+     * Method has one signature.
+     * @param - cohortData - manipulated data that has to be set in the reducer.
+****************************************/
+
+export function setCohortDetails(cohortData) {
+    return dispatch => {
+        dispatch({
+            type: actionTypes.SET_COHORT_DETAILS,
+            payload: cohortData
+        });
+    }
+}
+
+/**************************************** 
+     * Function Name: getCohortCriteria
+     * Description: exports an action to get the cohort criterion
+     * from the backend.
+     * The data received is returned via promise which can be used
+     * for manipulation. 
+     * Method has one signature.
+     * @param - cohort_id - used to make the api call based on the cohort ID.
+****************************************/
+
+export function getCohortCriteria(cohort_id) {
+    return dispatch => new Promise(function(resolve, reject){
+
+        apiGet('GetCohortCriterion', {
+
+            'cohortObj.cohort_id' : cohort_id
+
+        }).then(res => {
+            console.log(res);
+            resolve(res)
+        })
+        .catch(err => {
+            console.log(err);
+            reject(err)
+        });
+    });
 }
