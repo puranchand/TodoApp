@@ -1,0 +1,35 @@
+Post react Api..
+ *--------------*
+export function login(user){
+	return dispatch => {
+	apiPost('Login', `userAuthentication.userProfile.email=${user.email}&userAuthentication.password=${user.password}`).then(res => {
+    	console.log(res);
+    	dispatch({
+    		type: actionTypes.AUTH_LOGIN_SUCCESS,
+    		payload: true
+    	});
+    })
+    .catch(err => {
+    	dispatch({
+    		type: actionTypes.AUTH_LOGIN_ERROR,
+    		payload: err.response
+    	});
+    })
+
+  }
+}
+
+
+*********************
+
+export function Logout() {
+    return dispatch => new Promise((resolve, reject) => {
+        apiPost('Logout', '').then(res => {
+            console.log(res);
+            resolve(res);
+        })
+        .catch(err => {
+            reject(err);
+        });
+    })
+}
